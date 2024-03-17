@@ -1,52 +1,61 @@
-﻿//abstraction and encapsulation
-abstract class Vehicle
-{
-    public abstract void Drive();
-    public abstract void Stop()
-    public abstract string Model {get; set;} //getting and setting the info based on the main (program)
-    public abstract string Make {get; set;}
-    public abstract int Year {get; set} 
+using System;
 
-    //inheritance
-class Car : Vehicle
+// abstraction
+abstract class Vehicle {
+    // Common Attributes
+    public string Model;
+    public string Make;
+    public int Year;
 
-    //git
-    //Attributes
-    public override string Model {get; set;}
-    public override string Make {get; set;}
-    public override int Year {get; set;}
-
-    //Constructor
-    public Car(string model, string make, int year) {
+    // Constructor
+    protected Vehicle(string model, string make, int year) {
         Model = model;
         Make = make;
         Year = year;
     }
 
-    //Methods
-    public override void Drive() 
-    {
-        Console.WriteLine("The car is now running.");
+    // Abstract Method
+    public abstract void Drive();
+}
+
+// Car class inheriting from Vehicle
+class Car : Vehicle {
+    // Constructor
+    public Car(string model, string make, int year) : base(model, make, year) {
     }
 
-    public override void Stop() {
-        Console.WriteLine("The car has stopped.");
+    // Override Drive method
+    public override void Drive() {
+        Console.WriteLine("The car is now running. Vrroooom!");
+    }
+}
+
+// ElectricCar class inheriting from Car
+class ElectricCar : Car {
+    // Unique attribute
+    public int BatteryCapacity;
+
+    // Constructor
+    public ElectricCar(string model, string make, int year, int batteryCapacity) : base(model, make, year) {
+        BatteryCapacity = batteryCapacity;
+    }
+
+    // Override Drive method with different implementation
+    public override void Drive() {
+        Console.WriteLine("The electric car is now running silently.");
     }
 }
 
 class Program {
     static void Main(string[] args) {
-        //accessing the car and putting details about car
-        Vehicle carnum1 = new Car("Toyota", "Corolla", 2023);
-        Vehicle carnum2 = new Car("Audi","R8", 2006);
+        // Using Car class
+        Car myCar = new Car("Toyota", "Corolla", 2023);
+        Console.WriteLine($"Model: {myCar.Model}, Make: {myCar.Make}, Year: {myCar.Year}");
+        myCar.Drive();
 
-        carnum1.Drive();
-        carnum1.Stop();
-        Console.WriteLine($"Model: {carnum1.Model}, Make: {carnum1.Make}, Year: {carnum1.Year};
-
-         carnum2.Drive();
-        carnum2.Stop();
-        Console.WriteLine($"Model: {carnum2.Model}, Make: {carnum2.Make}, Year: {carnum2.Year};
-
+        // Using ElectricCar class
+        ElectricCar myElectricCar = new ElectricCar("Tesla", "Model S", 2024, 100);
+        Console.WriteLine($"Model: {myElectricCar.Model}, Make: {myElectricCar.Make}, Year: {myElectricCar.Year}, Battery Capacity: {myElectricCar.BatteryCapacity} kWh");
+        myElectricCar.Drive();
     }
 }
